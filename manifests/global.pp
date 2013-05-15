@@ -2,6 +2,8 @@
 #
 # Set a Ruby version as the global default.
 #
+# TODO: Always manage this file. Use inheritance?
+#
 # === Parameters:
 #
 # [*version*]
