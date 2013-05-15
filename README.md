@@ -1,4 +1,4 @@
-# alphagov-rbenv
+# puppet-rbenv
 
 Manage a single system installation of rbenv and Rubies.
 
