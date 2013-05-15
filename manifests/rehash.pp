@@ -5,6 +5,8 @@
 #
 # The title of the resource is used as the version.
 #
+# TODO: Does this need to be version specific?
+#
 define rbenv::rehash() {
   $version = $title
 
