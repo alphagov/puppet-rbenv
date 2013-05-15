@@ -1,7 +1,7 @@
-# == Define: rbenv::symlink
+# == Define: rbenv::alias
 #
-# Create a symlink from one installed version of Ruby to another. Can be
-# used to abstract patch numbers from Ruby semvers.
+# Create an alias from one version of Ruby to an installed one. Can be used
+# to abstract patch numbers from Ruby semvers.
 #
 # The title of the resource is used as the aliased version.
 #
@@ -14,16 +14,17 @@
 # === Examples
 #
 # rbenv::version { '1.9.3-p123': }
-# rbenv::symlink { '1.9.3':
+# rbenv::alias { '1.9.3':
 #   to_version => '1.9.3-p123',
 # }
 #
-define rbenv::symlink(
+define rbenv::alias(
   $to_version
 ) {
+  $version = $title
   $versions_path = '/usr/lib/rbenv/versions'
 
-  file { "${versions_path}/${title}":
+  file { "${versions_path}/${version}":
     ensure  => link,
     target  => $to_version,
     require => Rbenv::Version[$to_version],

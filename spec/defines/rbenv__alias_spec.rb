@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'rbenv::symlink' do
+describe 'rbenv::alias' do
   context '1.2.3 to 1.2.3-p456' do
     let(:title) { '1.2.3' }
     let(:params) {{
