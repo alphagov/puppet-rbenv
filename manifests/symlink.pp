@@ -16,7 +16,7 @@
 # rbenv::version { '1.9.3-p123': }
 # rbenv::symlink { '1.9.3':
 #   to_version => '1.9.3-p123',
-# } 
+# }
 #
 define rbenv::symlink(
   $to_version

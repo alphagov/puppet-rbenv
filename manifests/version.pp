@@ -11,6 +11,7 @@
 #
 define rbenv::version() {
   $version = $title
+  $env_var = "RBENV_VERSION=${version}"
   $package_name = "rbenv-ruby-${version}"
 
   package { $package_name:
@@ -20,8 +21,8 @@ define rbenv::version() {
 
   exec { "bundler for ${version}":
     command     => 'rbenv exec gem install bundler',
-    unless      => "RBENV_VERSION=${version} rbenv exec gem list | grep -Pqs '^bundler\s'",
-    environment => "RBENV_VERSION=${version}",
+    unless      => "${env_var} rbenv exec gem list | grep -Pqs '^bundler\s'",
+    environment => $env_var,
     provider    => 'shell',
     notify      => Rbenv::Rehash[$version],
   }

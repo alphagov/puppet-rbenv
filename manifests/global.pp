@@ -21,7 +21,7 @@
 # rbenv::version { '1.9.3-p123': }
 # class { 'rbenv::global':
 #   version => '1.9.3-p123',
-# } 
+# }
 #
 class rbenv::global(
   $version = 'system'
