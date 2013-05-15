@@ -7,7 +7,7 @@ describe 'rbenv::rehash' do
     it { 
       should contain_exec('rbenv rehash for 1.2.3-p456').with(
         :environment => 'RBENV_VERSION=1.2.3-p456',
-        :refreshonly => true,
+        :refreshonly => true
       )
     }
   end

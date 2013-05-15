@@ -6,7 +6,7 @@ describe 'rbenv::version' do
 
     it {
       should contain_package('rbenv-ruby-1.2.3-p456').with(
-        :require => 'Class[Rbenv]',
+        :require => 'Class[Rbenv]'
       )
     }
 
@@ -14,7 +14,7 @@ describe 'rbenv::version' do
       should contain_exec('bundler for 1.2.3-p456').with(
         :environment => 'RBENV_VERSION=1.2.3-p456',
         :provider => 'shell',
-        :notify => 'Rbenv::Rehash[1.2.3-p456]',
+        :notify => 'Rbenv::Rehash[1.2.3-p456]'
       )
     }
 

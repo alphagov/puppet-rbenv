@@ -7,7 +7,7 @@ describe 'rbenv::global' do
     it {
       should contain_file(file_path).with(
         :content => "system\n",
-        :require => 'Class[Rbenv]',
+        :require => 'Class[Rbenv]'
       )
     }
   end
@@ -20,7 +20,7 @@ describe 'rbenv::global' do
     it {
       should contain_file(file_path).with(
         :content => "1.2.3\n",
-        :require => 'Rbenv::Version[1.2.3]',
+        :require => 'Rbenv::Version[1.2.3]'
       )
     }
   end

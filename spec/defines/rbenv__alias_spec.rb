@@ -11,7 +11,7 @@ describe 'rbenv::alias' do
       should contain_file('/usr/lib/rbenv/versions/1.2.3').with(
         :ensure  => 'link',
         :target  => '1.2.3-p456',
-        :require => 'Rbenv::Version[1.2.3-p456]',
+        :require => 'Rbenv::Version[1.2.3-p456]'
       )
     }
   end
