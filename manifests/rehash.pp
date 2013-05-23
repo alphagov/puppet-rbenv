@@ -12,7 +12,7 @@ define rbenv::rehash() {
 
   exec { "rbenv rehash for ${version}":
     command     => 'rbenv rehash',
-    environment => "RBENV_VERSION=${version}",
+    environment => ["RBENV_VERSION=${version}", "RBENV_ROOT=/usr/lib/rbenv"],
     refreshonly => true,
   }
 }
