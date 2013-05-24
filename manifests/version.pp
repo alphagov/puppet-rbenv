@@ -10,9 +10,18 @@
 # non-interactive shell (e.g. cron). They explicitly pass `RBENV_ROOT` and
 # reference `rbenv exec` (rather than the shim) for this reason.
 #
+# == Parameters
+# [*bundler_version*]
+#   Optional parameter that allows to specify the version of bundler to be
+#   installed with the specified version of ruby
+#
 # === Examples
 #
 # rbenv { ['1.8.7-p1', '1.9.3-p2']: }
+#
+# rbenv { '1.9.3-p327':
+#   bundler_version => '1.1.4',
+# }
 #
 define rbenv::version (
   $bundler_version = undef,
