@@ -8,11 +8,16 @@
 # TODO: Does this need to be version specific?
 #
 define rbenv::rehash() {
+  include rbenv::params
+
   $version = $title
 
   exec { "rbenv rehash for ${version}":
     command     => 'rbenv rehash',
-    environment => ["RBENV_VERSION=${version}", "RBENV_ROOT=/usr/lib/rbenv"],
+    environment => [
+      "RBENV_ROOT=${rbenv::params::rbenv_root}",
+      "RBENV_VERSION=${version}",
+    ],
     refreshonly => true,
   }
 }

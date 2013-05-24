@@ -6,6 +6,7 @@ describe 'rbenv' do
   it {
     should contain_file('/etc/profile.d/rbenv.sh').with(
       :mode    => '0755',
+      :content => /RBENV_ROOT="\/usr\/lib\/rbenv"/,
       :require => 'Package[rbenv]'
     )
   }

@@ -7,6 +7,8 @@
 # - Run `rvenv init`.
 #
 class rbenv {
+  include rbenv::params
+
   package { 'rbenv':
     ensure => present,
   }
@@ -14,7 +16,7 @@ class rbenv {
   file { '/etc/profile.d/rbenv.sh':
     ensure  => present,
     mode    => '0755',
-    source  => 'puppet:///modules/rbenv/etc/profile.d/rbenv.sh',
+    content => template('rbenv/etc/profile.d/rbenv.sh.erb'),
     require => Package['rbenv'],
   }
 }
