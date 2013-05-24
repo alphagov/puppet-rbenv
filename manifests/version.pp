@@ -10,7 +10,7 @@
 # non-interactive shell (e.g. cron). They explicitly pass `RBENV_ROOT` and
 # reference `rbenv exec` (rather than the shim) for this reason.
 #
-# == Parameters
+# === Parameters
 # [*bundler_version*]
 #   Optional parameter that allows to specify the version of bundler to be
 #   installed with the specified version of ruby
