@@ -14,7 +14,9 @@
 #
 # rbenv { ['1.8.7-p1', '1.9.3-p2']: }
 #
-define rbenv::version() {
+define rbenv::version (
+  $bundler_version = undef,
+) {
   include rbenv::params
 
   $version = $title
@@ -31,8 +33,13 @@ define rbenv::version() {
     require => Class['rbenv'],
   }
 
+  $install_bundler_cmd = $bundler_version ? {
+    undef   => "rbenv exec gem install bundler",
+    default => "rbenv exec gem install bundler -v ${bundler_version}"
+  }
+
   exec { "bundler for ${version}":
-    command     => 'rbenv exec gem install bundler',
+    command     => $install_bundler_cmd,
     unless      => "${env_string} rbenv exec gem list | grep -Pqs '^bundler\s'",
     environment => $env_vars,
     provider    => 'shell',

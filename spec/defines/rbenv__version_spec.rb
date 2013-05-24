@@ -23,6 +23,17 @@ describe 'rbenv::version' do
       )
     }
 
+    context 'should install bundler with specified version' do
+      let(:params) { {
+        :bundler_version => '8.9.0'
+      } }
+      it {
+        should contain_exec('bundler for 1.2.3-p456').with(
+          :command => /^rbenv exec gem install bundler -v 8.9.0/
+        )
+      }
+    end
+
     it { should contain_rbenv__rehash('1.2.3-p456') }
   end
 end
