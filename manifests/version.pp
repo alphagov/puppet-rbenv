@@ -34,7 +34,7 @@ define rbenv::version (
   }
 
   $install_bundler_cmd = $bundler_version ? {
-    undef   => "rbenv exec gem install bundler",
+    undef   => 'rbenv exec gem install bundler',
     default => "rbenv exec gem install bundler -v ${bundler_version}"
   }
 
