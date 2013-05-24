@@ -12,7 +12,12 @@ describe 'rbenv::version' do
 
     it {
       should contain_exec('bundler for 1.2.3-p456').with(
-        :environment => 'RBENV_VERSION=1.2.3-p456',
+        :command     => /^rbenv exec/,
+        :unless      => /^RBENV_ROOT=\/usr\/lib\/rbenv RBENV_VERSION=1.2.3-p456 rbenv exec/,
+        :environment => [
+          'RBENV_ROOT=/usr/lib/rbenv',
+          'RBENV_VERSION=1.2.3-p456',
+        ],
         :provider => 'shell',
         :notify => 'Rbenv::Rehash[1.2.3-p456]'
       )
