@@ -1,20 +1,15 @@
 # == Class: rbenv::global
 #
-# Set a Ruby version as the global default.
-#
-# TODO: Always manage this file. Use inheritance?
+# Set a Ruby version as the global. Overrides the default which is
+# provided by `Rbenv::Global::Default[]`.
 #
 # === Parameters:
 #
 # [*version*]
-#   Version to use. A matching `Rbenv::Version[]` resource must exist.
-#   Default: system
+#   Version to use. A matching `Rbenv::Version[]` resource must exist. Must
+#   not be `system`.
 #
 # === Examples
-#
-# Use the default system binary:
-#
-# include rbenv::global
 #
 # Use a specific version installed by Puppet:
 #
@@ -25,15 +20,15 @@
 #
 class rbenv::global(
   $version = 'system'
-){
-  $real_require = $version ? {
-    'system' => Class['rbenv'],
-    default  => Rbenv::Version[$version],
+) inherits rbenv::global::default {
+  if ($version == 'system') {
+    fail("${title}: Use rbenv::global::default to set 'system'")
   }
 
-  file { '/usr/lib/rbenv/version':
-    ensure  => present,
+  include rbenv::params
+
+  File[$rbenv::params::global_version] {
     content => "${version}\n",
-    require => $real_require,
+    require +> Rbenv::Version[$version],
   }
 }

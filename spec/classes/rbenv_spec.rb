@@ -10,4 +10,6 @@ describe 'rbenv' do
       :require => 'Package[rbenv]'
     )
   }
+
+  it { should include_class('rbenv::global::default') }
 end

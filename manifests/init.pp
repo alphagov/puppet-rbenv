@@ -8,6 +8,7 @@
 #
 class rbenv {
   include rbenv::params
+  include rbenv::global::default
 
   package { 'rbenv':
     ensure => present,
