@@ -18,7 +18,7 @@ define rbenv::rehash() {
   $version = $title
 
   exec { "rbenv rehash for ${version}":
-    command     => 'rbenv rehash',
+    command     => "${rbenv::params::rbenv_binary} rehash",
     environment => [
       "RBENV_ROOT=${rbenv::params::rbenv_root}",
       "RBENV_VERSION=${version}",

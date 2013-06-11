@@ -36,15 +36,17 @@ define rbenv::version (
     require => Class['rbenv'],
   }
 
-  $env_vars = [
+  $env_vars   = [
     "RBENV_ROOT=${rbenv::params::rbenv_root}",
     "RBENV_VERSION=${version}",
   ]
   $env_string = inline_template('<%= env_vars.join(" ") -%>')
-  $cmd_unless = "${env_string} rbenv exec gem list | grep -Pqs '^bundler\s'"
+
+  $cmd_gem     = "${rbenv::params::rbenv_binary} exec gem"
+  $cmd_unless  = "${env_string} ${cmd_gem} list | grep -Pqs '^bundler\s'"
   $cmd_install = $bundler_version ? {
-    undef   => 'rbenv exec gem install bundler',
-    default => "rbenv exec gem install bundler -v ${bundler_version}"
+    undef   => "${cmd_gem} install bundler",
+    default => "${cmd_gem} install bundler -v ${bundler_version}"
   }
 
   exec { "bundler for ${version}":
