@@ -31,25 +31,25 @@ define rbenv::version (
   $version = $title
   $package_name = "rbenv-ruby-${version}"
 
-  $env_vars = [
-    "RBENV_ROOT=${rbenv::params::rbenv_root}",
-    "RBENV_VERSION=${version}",
-  ]
-  $env_string = inline_template('<%= env_vars.join(" ") -%>')
-
   package { $package_name:
     notify  => Exec["bundler for ${version}"],
     require => Class['rbenv'],
   }
 
-  $install_bundler_cmd = $bundler_version ? {
+  $env_vars = [
+    "RBENV_ROOT=${rbenv::params::rbenv_root}",
+    "RBENV_VERSION=${version}",
+  ]
+  $env_string = inline_template('<%= env_vars.join(" ") -%>')
+  $cmd_unless = "${env_string} rbenv exec gem list | grep -Pqs '^bundler\s'"
+  $cmd_install = $bundler_version ? {
     undef   => 'rbenv exec gem install bundler',
     default => "rbenv exec gem install bundler -v ${bundler_version}"
   }
 
   exec { "bundler for ${version}":
-    command     => $install_bundler_cmd,
-    unless      => "${env_string} rbenv exec gem list | grep -Pqs '^bundler\s'",
+    command     => $cmd_install,
+    unless      => $cmd_unless,
     environment => $env_vars,
     provider    => 'shell',
     notify      => Rbenv::Rehash[$version],
