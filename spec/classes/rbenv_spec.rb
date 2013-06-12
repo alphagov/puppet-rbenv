@@ -1,15 +1,28 @@
 require 'spec_helper'
 
 describe 'rbenv' do
-  it { should contain_package('rbenv') }
+  context 'standard resources' do
+    it { should contain_package('rbenv') }
 
-  it {
-    should contain_file('/etc/profile.d/rbenv.sh').with(
-      :mode    => '0755',
-      :content => /RBENV_ROOT="\/usr\/lib\/rbenv"/,
-      :require => 'Package[rbenv]'
-    )
-  }
+    it {
+      should contain_file('/etc/profile.d/rbenv.sh').with(
+        :mode    => '0755',
+        :content => /RBENV_ROOT="\/usr\/lib\/rbenv"/,
+        :require => 'Package[rbenv]'
+      )
+    }
+  end
 
-  it { should include_class('rbenv::global::default') }
+  context 'global_version uses default from rbenv::global' do
+    # We can't test for `undef`. Takes the default from the child class.
+    it { should contain_class('rbenv::global').with_version('system') }
+  end
+
+  context 'global_version is 1.2.3' do
+    let(:params) {{
+      :global_version => '1.2.3',
+    }}
+
+    it { should contain_class('rbenv::global').with_version('1.2.3') }
+  end
 end
