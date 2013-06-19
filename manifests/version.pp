@@ -33,7 +33,7 @@ define rbenv::version (
   $package_name = "rbenv-ruby-${version}"
 
   package { $package_name:
-    notify  => Exec["bundler for ${version}"],
+    notify  => Exec["install bundler for ${version}"],
     require => Class['rbenv'],
   }
 
@@ -46,7 +46,7 @@ define rbenv::version (
   $cmd_unless  = "${cmd_gem} list | grep -Pqs '^bundler\s'"
   $cmd_install = "${cmd_gem} install bundler -v '${bundler_version}'"
 
-  exec { "bundler for ${version}":
+  exec { "install bundler for ${version}":
     command     => $cmd_install,
     unless      => $cmd_unless,
     environment => $env_vars,
