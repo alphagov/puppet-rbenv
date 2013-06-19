@@ -28,12 +28,10 @@ describe 'rbenv::version' do
 
       it 'should set env vars for rbenv' do
         should contain_exec(exec_title).with(
-          :unless      => /^RBENV_ROOT=\/usr\/lib\/rbenv RBENV_VERSION=1.2.3-p456 /,
           :environment => [
             'RBENV_ROOT=/usr/lib/rbenv',
             'RBENV_VERSION=1.2.3-p456',
-          ],
-          :provider    => 'shell'
+          ]
         )
       end
 
