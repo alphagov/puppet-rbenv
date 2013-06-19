@@ -39,7 +39,8 @@ describe 'rbenv::version' do
       context 'bundler_version not set (default)' do
         it {
           should contain_exec(exec_title).with(
-            :command => /gem install bundler -v '>= 0'$/
+            :command => /gem install bundler -v '>= 0'$/,
+            :unless  => /gem query -i -n bundler -v '>= 0'$/
           )
         }
       end
@@ -51,7 +52,8 @@ describe 'rbenv::version' do
 
         it {
           should contain_exec(exec_title).with(
-            :command => /gem install bundler -v '8.9.0'$/
+            :command => /gem install bundler -v '8.9.0'$/,
+            :unless  => /gem query -i -n bundler -v '8.9.0'$/
           )
         }
       end

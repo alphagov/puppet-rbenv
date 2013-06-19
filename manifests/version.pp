@@ -12,8 +12,13 @@
 #
 # === Parameters
 # [*bundler_version*]
-#   Optional parameter that allows to specify the version of bundler to be
-#   installed with the specified version of ruby.
+#   Optional parameter to specify the version of Bundler to be installed for
+#   the given version of Ruby. Accepts pessimistic versioning (~> x.y).
+#
+#   NB: It will NOT attempt to remove any currently installed versions of
+#   Bundler. This means that upgrades will work as expected, but downgrades
+#   will not. The greatest installed version always takes precendence.
+#
 #   Default: >= 0
 #
 # === Examples
@@ -43,12 +48,12 @@ define rbenv::version (
   ]
 
   $cmd_gem     = "${rbenv::params::rbenv_binary} exec gem"
-  $cmd_unless  = "${cmd_gem} list | grep -Pqs '^bundler\s'"
   $cmd_install = "${cmd_gem} install bundler -v '${bundler_version}'"
+  $cmd_unless  = "${cmd_gem} query -i -n bundler -v '${bundler_version}'"
 
   exec { "install bundler for ${version}":
     command     => $cmd_install,
-    unless      => $cmd_unless,
+    unless      => "${env_string} ${cmd_unless}",
     environment => $env_vars,
     notify      => Rbenv::Rehash[$version],
   }
