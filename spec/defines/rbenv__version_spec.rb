@@ -38,7 +38,7 @@ describe 'rbenv::version' do
       context 'bundler_version not set (default)' do
         it {
           should contain_exec(exec_title).with(
-            :command => /gem install bundler$/
+            :command => /gem install bundler -v '>= 0'$/
           )
         }
       end

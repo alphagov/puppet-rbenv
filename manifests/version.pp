@@ -13,7 +13,8 @@
 # === Parameters
 # [*bundler_version*]
 #   Optional parameter that allows to specify the version of bundler to be
-#   installed with the specified version of ruby
+#   installed with the specified version of ruby.
+#   Default: >= 0
 #
 # === Examples
 #
@@ -24,7 +25,7 @@
 # }
 #
 define rbenv::version (
-  $bundler_version = undef,
+  $bundler_version = '>= 0'
 ) {
   include rbenv::params
 
@@ -43,10 +44,7 @@ define rbenv::version (
 
   $cmd_gem     = "${rbenv::params::rbenv_binary} exec gem"
   $cmd_unless  = "${cmd_gem} list | grep -Pqs '^bundler\s'"
-  $cmd_install = $bundler_version ? {
-    undef   => "${cmd_gem} install bundler",
-    default => "${cmd_gem} install bundler -v '${bundler_version}'"
-  }
+  $cmd_install = "${cmd_gem} install bundler -v '${bundler_version}'"
 
   exec { "bundler for ${version}":
     command     => $cmd_install,
