@@ -50,7 +50,7 @@ describe 'rbenv::version' do
 
         it {
           should contain_exec(exec_title).with(
-            :command => /gem install bundler -v 8.9.0$/
+            :command => /gem install bundler -v '8.9.0'$/
           )
         }
       end

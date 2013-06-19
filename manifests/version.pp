@@ -45,7 +45,7 @@ define rbenv::version (
   $cmd_unless  = "${cmd_gem} list | grep -Pqs '^bundler\s'"
   $cmd_install = $bundler_version ? {
     undef   => "${cmd_gem} install bundler",
-    default => "${cmd_gem} install bundler -v ${bundler_version}"
+    default => "${cmd_gem} install bundler -v '${bundler_version}'"
   }
 
   exec { "bundler for ${version}":
