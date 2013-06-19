@@ -40,10 +40,9 @@ define rbenv::version (
     "RBENV_ROOT=${rbenv::params::rbenv_root}",
     "RBENV_VERSION=${version}",
   ]
-  $env_string = inline_template('<%= env_vars.join(" ") -%>')
 
   $cmd_gem     = "${rbenv::params::rbenv_binary} exec gem"
-  $cmd_unless  = "${env_string} ${cmd_gem} list | grep -Pqs '^bundler\s'"
+  $cmd_unless  = "${cmd_gem} list | grep -Pqs '^bundler\s'"
   $cmd_install = $bundler_version ? {
     undef   => "${cmd_gem} install bundler",
     default => "${cmd_gem} install bundler -v ${bundler_version}"
@@ -53,7 +52,6 @@ define rbenv::version (
     command     => $cmd_install,
     unless      => $cmd_unless,
     environment => $env_vars,
-    provider    => 'shell',
     notify      => Rbenv::Rehash[$version],
   }
 
