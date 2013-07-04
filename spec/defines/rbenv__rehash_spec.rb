@@ -10,6 +10,7 @@ describe 'rbenv::rehash' do
 
     it {
       should contain_exec('rbenv rehash for 1.2.3-p456').with(
+        :command     => '/usr/bin/rbenv rehash',
         :environment => [
           'RBENV_ROOT=/usr/lib/rbenv',
           'RBENV_VERSION=1.2.3-p456',
