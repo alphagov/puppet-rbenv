@@ -1,21 +1,18 @@
+---
+# Verify this with: http://lint.travis-ci.org/
 language: ruby
+# Delete dependency locks for matrix builds.
+before_install: rm Gemfile.lock || true
+script: bundle exec rake test
 rvm:
   - 1.8.7
   - 1.9.3
-  - ruby-head
 env:
-  - PUPPET_VER="~> 2.6"
-  - PUPPET_VER="~> 2.7"
-  - PUPPET_VER="~> 3.1"
-matrix:
-  allow_failures:
-    - rvm: ruby-head
-  exclude:
-    - rvm: 1.9.3
-      env: PUPPET_VER="~> 2.6"
-    - rvm: ruby-head
-      env: PUPPET_VER="~> 2.6"
-    - rvm: 1.9.3
-      env: PUPPET_VER="~> 2.7"
-    - rvm: ruby-head
-      env: PUPPET_VER="~> 2.7"
+  matrix:
+  - PUPPET_VERSION="~> 2.7.0"
+  - PUPPET_VERSION="~> 3.1.0"
+  - PUPPET_VERSION="~> 3.2.0"
+# Only notify for failed builds.
+notifications:
+  email:
+    on_success: never
