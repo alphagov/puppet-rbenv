@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'rbenv::version' do
+  let(:facts) {{
+    :osfamily => 'Debian',
+  }}
+
   context 'Version 1.2.3-p456' do
     let(:title) { '1.2.3-p456' }
     let(:exec_title) { 'install bundler for 1.2.3-p456' }

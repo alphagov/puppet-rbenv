@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe 'rbenv::global' do
+  let(:facts) {{
+    :osfamily => 'Debian',
+  }}
   let(:file_path) { '/usr/lib/rbenv/version' }
 
   context 'when version is default, system' do

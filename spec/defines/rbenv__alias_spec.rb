@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'rbenv::alias' do
+  let(:facts) {{
+    :osfamily => 'Debian',
+  }}
+
   context '1.2.3 to 1.2.3-p456' do
     let(:title) { '1.2.3' }
     let(:params) {{

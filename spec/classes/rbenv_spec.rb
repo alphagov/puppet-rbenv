@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'rbenv' do
+  let(:facts) {{
+    :osfamily => 'Debian',
+  }}
+
   context 'standard resources' do
     it { should contain_package('rbenv') }
 
