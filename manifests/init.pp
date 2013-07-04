@@ -20,14 +20,11 @@ class rbenv(
 
   package { 'rbenv':
     ensure => present,
-  }
-
+  } ->
   file { '/etc/profile.d/rbenv.sh':
     ensure  => present,
     mode    => '0755',
     content => template('rbenv/etc/profile.d/rbenv.sh.erb'),
-    require => Package['rbenv'],
-  }
-
+  } ->
   class { 'rbenv::global': }
 }

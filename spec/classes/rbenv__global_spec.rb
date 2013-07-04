@@ -11,7 +11,7 @@ describe 'rbenv' do
     it {
       should contain_file(file_path).with(
         :content => "system\n",
-        :require => 'Class[Rbenv]'
+        :require => nil
       )
     }
   end
@@ -24,7 +24,7 @@ describe 'rbenv' do
     it {
       should contain_file(file_path).with(
         :content => "1.2.3\n",
-        :require => ['Class[Rbenv]', 'Rbenv::Version[1.2.3]']
+        :require => 'Rbenv::Version[1.2.3]'
       )
     }
   end

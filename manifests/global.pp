@@ -11,13 +11,9 @@ class rbenv::global {
   $version = $::rbenv::global_version
 
   $require_real = $version ? {
-    'system' => Class['rbenv'],
-    default  => [
-      Class['rbenv'],
-      Rbenv::Version[$version],
-    ],
+    'system' => undef,
+    default  => Rbenv::Version[$version],
   }
-
   file { $rbenv::params::global_version:
     ensure  => present,
     content => "${version}\n",
