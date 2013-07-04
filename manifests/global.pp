@@ -5,15 +5,10 @@
 #
 # === Parameters:
 #
-# [*version*]
-#   Version to use. A matching `Rbenv::Version[]` resource must exist,
-#   unless `system` is specified.
-#   Default: system
-#
-class rbenv::global(
-  $version = 'system'
-) {
+class rbenv::global {
   include rbenv::params
+
+  $version = $::rbenv::global_version
 
   $require_real = $version ? {
     'system' => Class['rbenv'],

@@ -9,10 +9,12 @@
 # === Parameters:
 #
 # [*global_version*]
-#   Global version to use. Passed to `Rbenv::Global`.
+#   Version to use. A matching `Rbenv::Version[]` resource must exist,
+#   unless `system` is specified.
+#   Default: system
 #
 class rbenv(
-  $global_version = undef
+  $global_version = 'system'
 ) {
   include rbenv::params
 
@@ -27,7 +29,5 @@ class rbenv(
     require => Package['rbenv'],
   }
 
-  class { 'rbenv::global':
-    version => $global_version,
-  }
+  class { 'rbenv::global': }
 }

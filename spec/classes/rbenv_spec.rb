@@ -18,8 +18,7 @@ describe 'rbenv' do
   end
 
   context 'global_version uses default from rbenv::global' do
-    # We can't test for `undef`. Takes the default from the child class.
-    it { should contain_class('rbenv::global').with_version('system') }
+    it { should contain_class('rbenv::global') }
   end
 
   context 'global_version is 1.2.3' do
@@ -27,6 +26,6 @@ describe 'rbenv' do
       :global_version => '1.2.3',
     }}
 
-    it { should contain_class('rbenv::global').with_version('1.2.3') }
+    it { should contain_class('rbenv::global') }
   end
 end

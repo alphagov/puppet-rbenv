@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe 'rbenv::global' do
+# Focus on rbenv::global proxy of rbenv
+describe 'rbenv' do
   let(:facts) {{
     :osfamily => 'Debian',
   }}
@@ -17,7 +18,7 @@ describe 'rbenv::global' do
 
   context 'when version is 1.2.3' do
     let(:params) {{
-      :version => '1.2.3',
+      :global_version => '1.2.3',
     }}
 
     it {
