@@ -53,7 +53,7 @@ define rbenv::version (
 
   exec { "install bundler for ${version}":
     command     => $cmd_install,
-    unless      => "${env_string} ${cmd_unless}",
+    unless      => $cmd_unless,
     environment => $env_vars,
     notify      => Rbenv::Rehash[$version],
   }
