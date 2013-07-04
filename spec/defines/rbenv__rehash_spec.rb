@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe 'rbenv::rehash' do
+  let(:facts) {{
+    :osfamily => 'Debian',
+  }}
+
   context 'Version 1.2.3-p456' do
     let(:title) { '1.2.3-p456' }
 

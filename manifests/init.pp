@@ -9,25 +9,22 @@
 # === Parameters:
 #
 # [*global_version*]
-#   Global version to use. Passed to `Rbenv::Global`.
+#   Version to use. A matching `Rbenv::Version[]` resource must exist,
+#   unless `system` is specified.
+#   Default: system
 #
 class rbenv(
-  $global_version = undef
+  $global_version = 'system'
 ) {
   include rbenv::params
 
   package { 'rbenv':
     ensure => present,
-  }
-
+  } ->
   file { '/etc/profile.d/rbenv.sh':
     ensure  => present,
     mode    => '0755',
     content => template('rbenv/etc/profile.d/rbenv.sh.erb'),
-    require => Package['rbenv'],
-  }
-
-  class { 'rbenv::global':
-    version => $global_version,
-  }
+  } ->
+  class { 'rbenv::global': }
 }
