@@ -1,3 +1,6 @@
+2013-07-30 Release 1.0.1
+- Unset Bundler's env vars when querying version.
+
 2013-07-04 Release 1.0.0
 - Remove some hackery on rbenv::version exec{}.
 - Default bundler_version to `>= 0`.
