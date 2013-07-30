@@ -42,12 +42,13 @@ define rbenv::version (
     require => Class['rbenv'],
   }
 
-  $env_vars   = [
+  $env_vars = [
     "RBENV_ROOT=${rbenv::params::rbenv_root}",
     "RBENV_VERSION=${version}",
   ]
 
-  $cmd_gem     = "${rbenv::params::rbenv_binary} exec gem"
+  $unset_vars  = '/usr/bin/env -uRUBYOPT -uBUNDLE_GEMFILE -uGEM_HOME -uGEM_PATH'
+  $cmd_gem     = "${unset_vars} ${rbenv::params::rbenv_binary} exec gem"
   $cmd_install = "${cmd_gem} install bundler -v '${bundler_version}'"
   $cmd_unless  = "${cmd_gem} query -i -n bundler -v '${bundler_version}'"
 

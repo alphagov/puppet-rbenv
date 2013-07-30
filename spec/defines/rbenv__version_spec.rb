@@ -8,7 +8,7 @@ describe 'rbenv::version' do
   context 'Version 1.2.3-p456' do
     let(:title) { '1.2.3-p456' }
     let(:exec_title) { 'install bundler for 1.2.3-p456' }
-    let(:cmd_prefix) { /^\/usr\/bin\/rbenv exec gem/ }
+    let(:cmd_prefix) { /^\/usr\/bin\/env -uRUBYOPT -uBUNDLE_GEMFILE -uGEM_HOME -uGEM_PATH \/usr\/bin\/rbenv exec gem/ }
 
     context 'ruby version' do
       it {
@@ -24,7 +24,7 @@ describe 'rbenv::version' do
       it { should contain_exec(exec_title).with_notify('Rbenv::Rehash[1.2.3-p456]') }
     end
 
-    context 'bunder' do
+    context 'bundler' do
       it 'should set env vars for rbenv' do
         should contain_exec(exec_title).with(
           :environment => [
