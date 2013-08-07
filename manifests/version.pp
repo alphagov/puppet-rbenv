@@ -42,7 +42,10 @@ define rbenv::version (
     require => Class['rbenv'],
   }
 
+  $path_munged = join(reject(split($::path,':'),'rbenv/versions'),':')
+
   $env_vars = [
+    "PATH=${path_munged}",
     "RBENV_ROOT=${rbenv::params::rbenv_root}",
     "RBENV_VERSION=${version}",
   ]

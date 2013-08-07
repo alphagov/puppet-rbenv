@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'rbenv::version' do
   let(:facts) {{
     :osfamily => 'Debian',
+    :path     => '/usr/lib/rbenv/versions/1.9.3/bin:/usr/lib/rbenv/libexec:/usr/lib/rbenv/shims:/usr/sbin:/usr/bin:/sbin:/bin',
   }}
 
   context 'Version 1.2.3-p456' do
@@ -28,6 +29,7 @@ describe 'rbenv::version' do
       it 'should set env vars for rbenv' do
         should contain_exec(exec_title).with(
           :environment => [
+            'PATH=/usr/lib/rbenv/libexec:/usr/lib/rbenv/shims:/usr/sbin:/usr/bin:/sbin:/bin',
             'RBENV_ROOT=/usr/lib/rbenv',
             'RBENV_VERSION=1.2.3-p456',
           ]
