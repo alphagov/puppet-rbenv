@@ -4,7 +4,7 @@
 # the following for all new shell sessions:
 #
 # - Set `RBENT_ROOT` to a common system path.
-# - Run `rvenv init`.
+# - Run `rbenv init`.
 #
 # === Parameters:
 #
