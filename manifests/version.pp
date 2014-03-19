@@ -38,6 +38,7 @@ define rbenv::version (
   $package_name = "rbenv-ruby-${version}"
 
   package { $package_name:
+    ensure  => latest,
     notify  => Exec["install bundler for ${version}"],
     require => Class['rbenv'],
   }
