@@ -14,6 +14,7 @@ describe 'rbenv::version' do
     context 'ruby version' do
       it {
         should contain_package('rbenv-ruby-1.2.3-p456').with(
+          :ensure  => "latest",
           :notify  => "Exec[#{exec_title}]",
           :require => 'Class[Rbenv]'
         )
