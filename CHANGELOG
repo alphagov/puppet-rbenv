@@ -1,3 +1,6 @@
+2014-09-30 Release 1.1.1
+-  Revert: Allow installation of bundler even when puppet is within rbenv (#13).
+
 2014-09-29 Release 1.1.0
 -  Allow installation of bundler even when puppet is within rbenv (#8).
 - `rbenv::version` installs latest version of rbenv-ruby packages (#10).
