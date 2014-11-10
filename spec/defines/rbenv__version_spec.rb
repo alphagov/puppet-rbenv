@@ -57,5 +57,36 @@ describe 'rbenv::version' do
         }
       end
     end
+
+    context 'removing a version' do
+      let(:params) {{
+        :ensure => 'absent',
+      }}
+
+      it { should contain_package('rbenv-ruby-1.2.3-p456').with_ensure('purged') }
+
+      it {
+        should contain_file('/usr/lib/rbenv/versions/1.2.3-p456').with(
+          :ensure => "absent",
+          :force => true
+        )
+      }
+
+      it { should_not contain_exec(exec_title) }
+
+      it { should_not contain_rbenv__rehash('1.2.3-p456') }
+    end
+
+    context 'invalid ensure parameter' do
+      let(:params) {{
+        :ensure => 'wibble',
+      }}
+
+      it {
+        expect { should }.to raise_error(
+          Puppet::Error, /^Invalid value 'wibble' for ensure/
+        )
+      }
+    end
   end
 end
