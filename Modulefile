@@ -1,5 +1,5 @@
 name          'gdsoperations-rbenv'
-version       '1.1.1'
+version       '1.2.0'
 source        'https://github.com/gds-operations/puppet-rbenv'
 author        'Government Digital Service'
 license       'MIT'
