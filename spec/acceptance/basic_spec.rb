@@ -11,4 +11,9 @@ describe 'rbenv class' do
     result = apply_manifest(manifest)
     expect(@result.exit_code).to eq 2
   end
+
+  it 'should make rbenv available' do
+    rbenv_command = shell("rbenv")
+    expect(rbenv_command.exit_code).to eq 0
+  end
 end
