@@ -10,3 +10,5 @@ gem 'puppet-lint', '1.1.0'
 gem 'rspec-puppet', '2.2.0'
 gem 'puppetlabs_spec_helper', '1.0.1'
 gem 'puppet-syntax'
+
+gem 'beaker-rspec', '5.3.0'
