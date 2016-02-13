@@ -1,0 +1,19 @@
+{
+  "name":         "gdsoperations-rbenv",
+  "version":      "1.2.0",
+  "author":       "Government Digital Service",
+  "license":      "MIT",
+  "summary":      "System wide rbenv",
+  "source":       "https://github.com/gds-operations/puppet-rbenv",
+  "project_page": "https://github.com/gds-operations/puppet-rbenv",
+  "issues_url":   "https://github.com/gds-operations/puppet-rbenv/issues",
+  "tags":         ["ruby", "rbenv"],
+  "operatingsystem_support": [
+    {
+    "operatingsystem": "Ubuntu",
+    "operatingsystemrelease": ["12.04", "14.04"]
+    }
+  ],
+  "dependencies": [
+  ]
+}
