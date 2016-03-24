@@ -82,7 +82,7 @@ describe 'rbenv::version' do
         :ensure => 'wibble',
       }}
 
-      it { is_expected.to compile.and_raise_error(/^Invalid value 'wibble' for ensure/) }
+      it { is_expected.to compile.and_raise_error(/Invalid value 'wibble' for ensure/) }
     end
   end
 end
