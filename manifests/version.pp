@@ -69,11 +69,20 @@ define rbenv::version (
 
     rbenv::rehash { $version: }
 
-  } elsif $ensure == 'absent' {
+  } elsif $ensure == 'absent' and $::operatingsystem != 'Darwin' {
 
     package { $package_name:
       ensure => purged,
     }
+
+    # Cleanup bundler and any other gems (installed by the above exec)
+    file { "${rbenv::params::rbenv_root}/versions/${version}":
+      ensure  => absent,
+      force   => true,
+      require => Package[$package_name],
+    }
+
+  } elsif $ensure == 'absent' and $::operatingsystem == 'Darwin' {
 
     # Cleanup bundler and any other gems (installed by the above exec)
     file { "${rbenv::params::rbenv_root}/versions/${version}":
