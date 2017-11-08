@@ -24,6 +24,8 @@ define rbenv::alias(
   $version = $title
   $versions_path = '/usr/lib/rbenv/versions'
 
+  rbenv::version { $to_version: }
+
   file { "${versions_path}/${version}":
     ensure  => link,
     target  => $to_version,

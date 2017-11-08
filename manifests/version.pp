@@ -38,6 +38,7 @@ define rbenv::version (
   $ensure = 'present',
   $bundler_version = '>= 0'
 ) {
+  include rbenv
   include rbenv::params
 
   $version = $title
