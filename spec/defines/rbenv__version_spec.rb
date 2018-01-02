@@ -18,6 +18,17 @@ describe 'rbenv::version' do
           :require => 'Class[Rbenv]'
         )
       }
+
+      it {
+        should contain_file('/usr/lib/rbenv/versions/1.2.3-p456/etc').with(
+          :ensure => "directory",
+        )
+
+        should contain_file('/usr/lib/rbenv/versions/1.2.3-p456/etc/gemrc').with(
+          :ensure => "present",
+          :content => "gem: --no-document --no-rdoc --no-ri\n"
+        )
+      }
     end
 
     context 'rehash' do

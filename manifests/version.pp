@@ -69,6 +69,15 @@ define rbenv::version (
 
     rbenv::rehash { $version: }
 
+    # Save time and inodes by not installing gem documentation by default.
+    file { "${rbenv::params::rbenv_root}/versions/${version}/etc":
+      ensure => directory,
+    }
+    file { "${rbenv::params::rbenv_root}/versions/${version}/etc/gemrc":
+      ensure  => present,
+      content => "gem: --no-document --no-rdoc --no-ri\n",
+    }
+
   } elsif $ensure == 'absent' {
 
     package { $package_name:
