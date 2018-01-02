@@ -20,15 +20,28 @@ describe 'rbenv::version' do
       }
 
       it {
-        should contain_file('/usr/lib/rbenv/versions/1.2.3-p456/etc').with(
-          :ensure => "directory",
-        )
-
         should contain_file('/usr/lib/rbenv/versions/1.2.3-p456/etc/gemrc').with(
-          :ensure => "present",
-          :content => "gem: --no-document --no-rdoc --no-ri\n"
+          :ensure => "absent",
+          :force => true
         )
       }
+
+      context 'skipping the installation of gem documentation' do
+        let(:params) {{
+          :install_gem_docs => false,
+        }}
+
+        it {
+          should contain_file('/usr/lib/rbenv/versions/1.2.3-p456/etc').with(
+            :ensure => "directory",
+          )
+
+          should contain_file('/usr/lib/rbenv/versions/1.2.3-p456/etc/gemrc').with(
+            :ensure => "present",
+            :content => "gem: --no-document --no-rdoc --no-ri\n"
+          )
+        }
+      end
     end
 
     context 'rehash' do

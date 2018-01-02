@@ -26,17 +26,25 @@
 #
 #   Default: >= 0
 #
+# [*install_gem_docs*]
+#   Default: true
+#
+#   If set to false, the installation of gem documentation will be skipped. This
+#   speeds up install time and saves on inode usage.
+#
 # === Examples
 #
 # rbenv { ['1.8.7-p1', '1.9.3-p2']: }
 #
 # rbenv { '1.9.3-p327':
 #   bundler_version => '1.1.4',
+#   install_gem_docs => false,
 # }
 #
 define rbenv::version (
   $ensure = 'present',
-  $bundler_version = '>= 0'
+  $bundler_version = '>= 0',
+  $install_gem_docs = true,
 ) {
   include rbenv::params
 
@@ -59,6 +67,7 @@ define rbenv::version (
     $cmd_gem     = "${unset_vars} ${rbenv::params::rbenv_binary} exec gem"
     $cmd_install = "${cmd_gem} install bundler -v '${bundler_version}'"
     $cmd_unless  = "${cmd_gem} query -i -n bundler -v '${bundler_version}'"
+    $rbenv_etc   = "${rbenv::params::rbenv_root}/versions/${version}/etc"
 
     exec { "install bundler for ${version}":
       command     => $cmd_install,
@@ -69,13 +78,20 @@ define rbenv::version (
 
     rbenv::rehash { $version: }
 
-    # Save time and inodes by not installing gem documentation by default.
-    file { "${rbenv::params::rbenv_root}/versions/${version}/etc":
-      ensure => directory,
-    }
-    file { "${rbenv::params::rbenv_root}/versions/${version}/etc/gemrc":
-      ensure  => present,
-      content => "gem: --no-document --no-rdoc --no-ri\n",
+    if $install_gem_docs {
+      file { "${rbenv_etc}/gemrc":
+        ensure => absent,
+        force  => true,
+      }
+    } else {
+      file { $rbenv_etc:
+        ensure => directory,
+      }
+
+      file { "${rbenv_etc}/gemrc":
+        ensure  => present,
+        content => "gem: --no-document --no-rdoc --no-ri\n",
+      }
     }
 
   } elsif $ensure == 'absent' {
