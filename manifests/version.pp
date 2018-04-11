@@ -52,9 +52,11 @@ define rbenv::version (
   $package_name = "rbenv-ruby-${version}"
 
   if $ensure == 'present' {
+    $rbenv_etc   = "${rbenv::params::rbenv_root}/versions/${version}/etc"
+
     package { $package_name:
       ensure  => latest,
-      notify  => Exec["install bundler for ${version}"],
+      notify  => File[$rbenv_etc],
       require => Class['rbenv'],
     }
 
@@ -63,11 +65,29 @@ define rbenv::version (
       "RBENV_VERSION=${version}",
     ]
 
+    file { $rbenv_etc:
+      ensure => directory,
+      notify => File["${rbenv_etc}/gemrc"]
+    }
+
+    if $install_gem_docs {
+      file { "${rbenv_etc}/gemrc":
+        ensure => absent,
+        force  => true,
+        notify => Exec["install bundler for ${version}"],
+      }
+    } else {
+      file { "${rbenv_etc}/gemrc":
+        ensure  => present,
+        content => "gem: --no-document --no-rdoc --no-ri\n",
+        notify  => Exec["install bundler for ${version}"],
+      }
+    }
+
     $unset_vars  = '/usr/bin/env -uRUBYOPT -uBUNDLE_GEMFILE -uGEM_HOME -uGEM_PATH'
     $cmd_gem     = "${unset_vars} ${rbenv::params::rbenv_binary} exec gem"
     $cmd_install = "${cmd_gem} install bundler -v '${bundler_version}'"
     $cmd_unless  = "${cmd_gem} query -i -n bundler -v '${bundler_version}'"
-    $rbenv_etc   = "${rbenv::params::rbenv_root}/versions/${version}/etc"
 
     exec { "install bundler for ${version}":
       command     => $cmd_install,
@@ -77,22 +97,6 @@ define rbenv::version (
     }
 
     rbenv::rehash { $version: }
-
-    if $install_gem_docs {
-      file { "${rbenv_etc}/gemrc":
-        ensure => absent,
-        force  => true,
-      }
-    } else {
-      file { $rbenv_etc:
-        ensure => directory,
-      }
-
-      file { "${rbenv_etc}/gemrc":
-        ensure  => present,
-        content => "gem: --no-document --no-rdoc --no-ri\n",
-      }
-    }
 
   } elsif $ensure == 'absent' {
 

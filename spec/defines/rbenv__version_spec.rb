@@ -8,19 +8,20 @@ describe 'rbenv::version' do
   context 'Version 1.2.3-p456' do
     let(:title) { '1.2.3-p456' }
     let(:exec_title) { 'install bundler for 1.2.3-p456' }
+    let(:rbenv_etc) { '/usr/lib/rbenv/versions/1.2.3-p456/etc' }
     let(:cmd_prefix) { /^\/usr\/bin\/env -uRUBYOPT -uBUNDLE_GEMFILE -uGEM_HOME -uGEM_PATH \/usr\/bin\/rbenv exec gem/ }
 
     context 'ruby version' do
       it {
         should contain_package('rbenv-ruby-1.2.3-p456').with(
           :ensure  => "latest",
-          :notify  => "Exec[#{exec_title}]",
+          :notify  => "File[#{rbenv_etc}]",
           :require => 'Class[Rbenv]'
         )
       }
 
       it {
-        should contain_file('/usr/lib/rbenv/versions/1.2.3-p456/etc/gemrc').with(
+        should contain_file("#{rbenv_etc}/gemrc").with(
           :ensure => "absent",
           :force => true
         )
@@ -32,11 +33,11 @@ describe 'rbenv::version' do
         }}
 
         it {
-          should contain_file('/usr/lib/rbenv/versions/1.2.3-p456/etc').with(
+          should contain_file(rbenv_etc).with(
             :ensure => "directory",
           )
 
-          should contain_file('/usr/lib/rbenv/versions/1.2.3-p456/etc/gemrc').with(
+          should contain_file("#{rbenv_etc}/gemrc").with(
             :ensure => "present",
             :content => "gem: --no-document --no-rdoc --no-ri\n"
           )
