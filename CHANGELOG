@@ -1,3 +1,6 @@
+2018-04-12 Release 1.3.1
+- Fix puppet error that occurs first time this is run for a new ruby version.
+
 2018-01-08 Release 1.3.0
 - Add an option not to install gem documentation (default: false, install gem
   documentation).
